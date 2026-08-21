@@ -1,0 +1,12 @@
+CollisionShape2D
+ColorRect
+Label
+Camera2D
+CollisionPolygon2D
+StaticBody2D
+Node2D
+RigidBody2D
+Panel
+CanvasLayer
+Sprite2D
+CharacterBody2D

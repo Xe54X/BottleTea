@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b0bf0fdou5ckj"]
+
+[ext_resource type="Script" uid="uid://cnjw8mvp66mxw" path="res://Scripts/map_bottle.gd" id="1_qbwn1"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0ii80"]
+
+[node name="Control" type="StaticBody2D" unique_id=1147731993]
+script = ExtResource("1_qbwn1")
+spawn_center = Vector2(0, 0)
+spawn_radius = 200.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1573840227]
+position = Vector2(0, 514)
+shape = SubResource("WorldBoundaryShape2D_0ii80")
+
+[node name="SpawnBottle" type="Node2D" parent="." unique_id=1082761553]
+position = Vector2(0, -448)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1179270862]
+position = Vector2(0, 200)
+zoom = Vector2(0.8, 0.8)

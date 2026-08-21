@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dtm3j5hwi61fo"]
+
+[ext_resource type="Texture2D" uid="uid://b3cw72ik4hrth" path="res://Sprites/Bottle.png" id="1_fxe7y"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m5308"]
+
+[node name="Control" type="RigidBody2D" unique_id=1499210299]
+mass = 0.15
+physics_material_override = SubResource("PhysicsMaterial_m5308")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1313476642]
+position = Vector2(0, 5.066395e-07)
+scale = Vector2(0.16518041, 0.16414489)
+texture = ExtResource("1_fxe7y")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2006285601]
+scale = Vector2(0.678676, 0.678676)
+polygon = PackedVector2Array(-18, -50, 18, -50, 18, -46, 20, -42, 20, 44, 16, 47, 16, 50, -16, 50, -16, 47, -20, 44, -20, -42, -18, -46)
