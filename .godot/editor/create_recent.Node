@@ -1,8 +1,8 @@
+VBoxContainer
+HBoxContainer
 Label
 Button
-HBoxContainer
 LineEdit
-VBoxContainer
 ColorRect
 ScrollContainer
 Node2D

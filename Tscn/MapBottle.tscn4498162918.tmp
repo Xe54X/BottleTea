@@ -58,30 +58,20 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer" unique_id=1525855072]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-text = "Настройки"
+text = "Options"
 horizontal_alignment = 1
 
 [node name="Line 1" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=1407318933]
-custom_minimum_size = Vector2(0, 2)
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
-color = Color(0, 0, 0, 1)
 
-[node name="Color" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=763657796]
+[node name="Color" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=299265310]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=152684021]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Цвет фона:"
-
-[node name="Color" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=1143216220]
-layout_mode = 2
-alignment = 1
-
-[node name="ColorPicker" type="ColorPicker" parent="Options/ScrollContainer/VBoxContainer/Color/Color" unique_id=1183437634]
+[node name="ColorPicker" type="ColorPicker" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=1183437634]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -93,57 +83,47 @@ color_modes_visible = false
 sliders_visible = false
 presets_visible = false
 
-[node name="Buttons" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Color/Color" unique_id=1598376567]
+[node name="Buttons" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=1598376567]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/Color/Color/Buttons" unique_id=833740264]
+[node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/Color/Buttons" unique_id=833740264]
 layout_mode = 2
-text = "Применить"
+text = "Apply"
 
-[node name="ResetButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/Color/Color/Buttons" unique_id=1163886857]
+[node name="ResetButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/Color/Buttons" unique_id=1163886857]
 layout_mode = 2
-text = "Сбросить"
+text = "Reset"
 
 [node name="Line 2" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=1926254049]
-custom_minimum_size = Vector2(0, 2)
-layout_mode = 2
-color = Color(0, 0, 0, 1)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=1279039494]
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/VBoxContainer" unique_id=1822799297]
+[node name="MaxBottle" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=1952777649]
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Максимум банок:"
+alignment = 1
 
-[node name="MaxBottle" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/VBoxContainer" unique_id=1952777649]
+[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/MaxBottle" unique_id=1822799297]
 layout_mode = 2
+text = "Max bottle:"
 
-[node name="LineEdit" type="LineEdit" parent="Options/ScrollContainer/VBoxContainer/VBoxContainer/MaxBottle" unique_id=713838553]
+[node name="LineEdit" type="LineEdit" parent="Options/ScrollContainer/VBoxContainer/MaxBottle" unique_id=713838553]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/VBoxContainer/MaxBottle" unique_id=1313191261]
+[node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/MaxBottle" unique_id=1313191261]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
-text = "Применить"
+text = "Aplly"
 
 [node name="Line 3" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=773403746]
-custom_minimum_size = Vector2(0, 2)
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
-color = Color(0, 0, 0, 1)
 
 [node name="StatisticsBottle" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=863894194]
 layout_mode = 2
 script = ExtResource("3_8faaa")
-
-[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/StatisticsBottle" unique_id=682697391]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Статистика:"
 
 [node name="SpawnBottle" type="Label" parent="Options/ScrollContainer/VBoxContainer/StatisticsBottle" unique_id=1018318964]
 layout_mode = 2
@@ -152,6 +132,5 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Line 4" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=1657614627]
-custom_minimum_size = Vector2(0, 2)
+custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
-color = Color(0, 0, 0, 1)

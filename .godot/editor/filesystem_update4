@@ -3,3 +3,4 @@ res://Tscn/MapBottle.tscn
 res://Scripts/options.gd
 res://Scripts/bottle.gd
 res://Tscn/Bottle.tscn
+res://Scripts/statistics.gd
