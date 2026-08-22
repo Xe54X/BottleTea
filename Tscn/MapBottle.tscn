@@ -23,6 +23,7 @@ position = Vector2(0, 200)
 zoom = Vector2(0.8, 0.8)
 
 [node name="Options" type="CanvasLayer" parent="." unique_id=303527540]
+visible = false
 script = ExtResource("2_fcqoe")
 
 [node name="BG" type="Control" parent="Options" unique_id=1399772521]
@@ -79,7 +80,6 @@ text = "Цвет фона:"
 
 [node name="Color" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=1143216220]
 layout_mode = 2
-alignment = 1
 
 [node name="ColorPicker" type="ColorPicker" parent="Options/ScrollContainer/VBoxContainer/Color/Color" unique_id=1183437634]
 layout_mode = 2
@@ -172,15 +172,28 @@ layout_mode = 2
 [node name="Preview" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer" unique_id=2014836619]
 layout_mode = 2
 
-[node name="ImagePreview" type="TextureRect" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview" unique_id=851997683]
+[node name="ImagePreview" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview" unique_id=1501648840]
 custom_minimum_size = Vector2(150, 150)
+clip_contents = true
 layout_mode = 2
+color = Color(0.25565878, 0.2556588, 0.25565875, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview/ImagePreview" unique_id=851997683]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 1
 
 [node name="ImagePathLabel" type="Label" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview" unique_id=906818142]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 text = "Text"
 horizontal_alignment = 1
+text_overrun_behavior = 3
 
 [node name="Buttons" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer" unique_id=1733833372]
 layout_mode = 2
@@ -197,6 +210,42 @@ layout_mode = 2
 text = "Очистить"
 
 [node name="Line 5" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=2128378875]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Zoom" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=649468172]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/Zoom" unique_id=1267103493]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Приблежение:"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Zoom" unique_id=1581665270]
+layout_mode = 2
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Zoom/HBoxContainer2" unique_id=742384230]
+layout_mode = 2
+
+[node name="HSlider" type="HSlider" parent="Options/ScrollContainer/VBoxContainer/Zoom/HBoxContainer2/HBoxContainer" unique_id=149260630]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+max_value = 10.0
+
+[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/Zoom/HBoxContainer2/HBoxContainer" unique_id=882786206]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+text = "Text"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Options/ScrollContainer/VBoxContainer/Zoom/HBoxContainer2" unique_id=1819390968]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+text = "Сбросить"
+
+[node name="Line 6" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=672043259]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 color = Color(0, 0, 0, 1)

@@ -14,11 +14,12 @@ gravity_scale = 0.5
 script = ExtResource("1_b4s27")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2006285601]
-scale = Vector2(0.678676, 0.678676)
+scale = Vector2(0.7161105, 0.7161105)
 polygon = PackedVector2Array(-17.681484, -50.09754, 17.681484, -50.09754, 17.681484, -47.150627, 20.628399, -42.730255, 20.628399, 45.67717, 17.681484, 47.150627, 17.681484, 50.09754, -17.681484, 50.09754, -17.681484, 47.150627, -20.628399, 45.67717, -20.628399, -42.730255, -17.681484, -47.150627)
 
 [node name="Polygon2D" type="Polygon2D" parent="." unique_id=111198264]
 clip_children = 2
+scale = Vector2(1.0551581, 1.0551581)
 color = Color(0.6627451, 0.6745098, 0.7137255, 1)
 polygon = PackedVector2Array(-12, -34, 12, -34, 12, -32, 14, -29, 14, 31, 12, 32, 12, 34, -12, 34, -12, 32, -14, 31, -14, -29, -12, -32)
 
