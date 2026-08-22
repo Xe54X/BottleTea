@@ -1,225 +1,94 @@
-extends StaticBody2D
+extends RigidBody2D
 
-@export var bottle_scene: PackedScene = preload("res://Tscn/Bottle.tscn")
+@onready var base_bottle: Sprite2D = $Polygon2D/BaseBottle
+@onready var custom_bottle: Sprite2D = $Polygon2D/CustomBottle
 
-@onready var jars_container = $SpawnBottle
-@onready var options: CanvasLayer = $Options
-@onready var stats: VBoxContainer = $Options/ScrollContainer/VBoxContainer/StatisticsBottle
+var custom_texture_path: String = ""
 
-const SAVE_PATH = "user://Config.cfg"
+@export var custom_texture_scale: Vector2 = Vector2(0.16, 0.16)
 
-@export var spawn_center: Vector2 = Vector2(500, 300)                            ## Центральная точка спавна
-@export var spawn_radius: float = 20.0                                           ## Радиус спавна вокруг точки
-@export var min_distance_between_bottles: float = 40.0                           ## Минимальное расстояние между банками
-@export var max_spawn_attempts: int = 30                                         ## Максимальное количество попыток найти свободное место
-@export var max_bottles: int = 450                                               ## Максимальное количество банок
+func _ready():
+	_setup_custom_bottle()
+	_load_custom_texture()
 
-func _ready() -> void:
-	options.visible = false
-	_load_bottles()
-	if stats:
-		stats.update_current_count(jars_container.get_child_count())
+func _setup_custom_bottle():
+	if custom_bottle:
+		custom_bottle.position = Vector2(0, 0)
+		custom_bottle.rotation = 0
+		custom_bottle.offset = Vector2(0, 0)
+		custom_bottle.centered = true
+		custom_bottle.visible = true
+		custom_bottle.region_enabled = false
+		custom_bottle.scale = custom_texture_scale
+		print("CustomBottle настроен, Scale: ", custom_bottle.scale)
 
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("spawn_bottle"):                             # Спавн банки
-		_spawn_bottle()
-	if Input.is_action_just_pressed("despawn_bottle"):                           # Удалить последнюю банку
-		_despawn_last_bottle()
-	if Input.is_action_just_pressed("clear_bottle"):                             # Удалить все банки
-		_clear_all_bottles()
-	if Input.is_action_just_pressed("save_game"):                                # Сохранить
-		_save_game()
-	if Input.is_action_just_pressed("load_game"):                                # Загрузить
-		_load_game()
-	if Input.is_action_just_pressed("options"):                                  # Настройки
-		_toggle_options()
-
-# === Спавн одной банки ===
-func _spawn_bottle():
-	if jars_container == null:
-		print("Ошибка: контейнер не найден!")
+func load_custom_texture(texture_path: String):
+	if custom_bottle == null:
 		return
-	if jars_container.get_child_count() >= max_bottles:
-		print("Достигнут лимит банок: ", max_bottles)
+	if texture_path == "" or texture_path == "null":
+		clear_custom_texture()
 		return
-	var new_bottle = bottle_scene.instantiate()
-	var spawn_position = _find_free_position()
-	if spawn_position == Vector2.ZERO and jars_container.get_child_count() > 0:
-		print("Не удалось найти свободное место для банки!")
-		new_bottle.queue_free()
+	if not ResourceLoader.exists(texture_path):
+		print("Ошибка: файл не найден - ", texture_path)
 		return
-	new_bottle.position = spawn_position
-	_disable_physics_for_bottle(new_bottle)
-	new_bottle.rotation = randf_range(-0.3, 0.3)
-	jars_container.add_child(new_bottle)
-	if stats:
-		stats.on_bottle_spawned()
-		_save_stats_to_config()
-	print("Создана банка! Всего: ", jars_container.get_child_count())
-
-# === Поиск свободной позиции для спавна ===
-func _find_free_position() -> Vector2:
-	for attempt in range(max_spawn_attempts):
-		var random_angle = randf_range(0, 2 * PI)
-		var random_distance = randf_range(0, spawn_radius)
-		var candidate_position = spawn_center + Vector2(
-			cos(random_angle) * random_distance,
-			sin(random_angle) * random_distance
-		)
-		if _is_position_free(candidate_position):
-			return candidate_position
-	return Vector2.ZERO
-
-# === Проверка, свободна ли позиция ===
-func _is_position_free(position_to_check: Vector2) -> bool:
-	for child in jars_container.get_children():
-		if child is StaticBody2D:
-			var distance = position_to_check.distance_to(child.position)
-			if distance < min_distance_between_bottles:
-				return false
-	return true
-
-# === Отключение физики для одной банки ===
-func _disable_physics_for_bottle(bottle: Node) -> void:
-	if bottle is StaticBody2D:
-		bottle.collision_layer = 0
-		bottle.collision_mask = 0
-		bottle.set_physics_process(false)
-		for child in bottle.get_children():
-			if child is CollisionShape2D:
-				child.set_deferred("disabled", true)
-			elif child is CollisionPolygon2D:
-				child.set_deferred("disabled", true)
-
-# === Отключение физики для всех банок ===
-func _disable_physics_for_all_bottles() -> void:
-	if jars_container == null:
-		return
-	for child in jars_container.get_children():
-		_disable_physics_for_bottle(child)
-
-# === Удалить последнюю банку ===
-func _despawn_last_bottle():
-	if jars_container == null or jars_container.get_child_count() == 0:
-		return
-	var last_bottle = jars_container.get_child(jars_container.get_child_count() - 1)
-	last_bottle.queue_free()
-	if stats:
-		stats.on_bottle_removed()
-		_save_stats_to_config()
-	print("Удалена банка! Осталось: ", jars_container.get_child_count() - 1)
-
-# === Удалить все банки ===
-func _clear_all_bottles():
-	if jars_container == null:
-		return
-	for child in jars_container.get_children():
-		child.queue_free()
-	if stats:
-		stats.on_all_bottles_cleared()
-		_save_stats_to_config()
-	print("Удалены все банки!")
-
-# === Сохранить игру ===
-func _save_game():
-	_save_bottles()
-	_save_stats_to_config()
-	print("Игра сохранена!")
-
-# === Загрузить игру ===
-func _load_game():
-	_load_bottles()
-	print("Игра загружена!")
-
-# === Сохранить банки ===
-func _save_bottles():
-	if jars_container == null:
-		return
-	var config = ConfigFile.new()
-	var error = config.load(SAVE_PATH)
-	if error != OK:
-		config = ConfigFile.new()
-	config.set_value("bottles", "count", jars_container.get_child_count())
-	for i in range(jars_container.get_child_count()):
-		var bottle = jars_container.get_child(i)
-		config.set_value("bottle_" + str(i), "position_x", bottle.position.x)
-		config.set_value("bottle_" + str(i), "position_y", bottle.position.y)
-		config.set_value("bottle_" + str(i), "rotation", bottle.rotation)
-	error = config.save(SAVE_PATH)
-	if error == OK:
-		print("Сохранено банок: ", jars_container.get_child_count())
+	var texture = load(texture_path)
+	if texture:
+		custom_bottle.texture = texture
+		custom_bottle.scale = custom_texture_scale
+		custom_bottle.rotation = 0
+		custom_bottle.offset = Vector2(0, 0)
+		custom_bottle.centered = true
+		custom_bottle.region_enabled = false
+		custom_bottle.visible = true
+		if base_bottle:
+			base_bottle.visible = false
+			print("BaseBottle скрыта")
+		custom_texture_path = texture_path
+		print("Текстура установлена: ", texture.get_size())
+		print("Scale CustomBottle: ", custom_bottle.scale)
+		_save_texture_path()
 	else:
-		print("Ошибка сохранения: ", error)
+		print("Ошибка загрузки текстуры!")
 
-# === Загрузить банки ===
-func _load_bottles():
-	if jars_container == null:
-		return
-	_clear_all_bottles()
-	var config = ConfigFile.new()
-	var error = config.load(SAVE_PATH)
-	if error != OK:
-		print("Файл сохранения не найден")
-		return
-	var count = config.get_value("bottles", "count", 0)
-	for i in range(count):
-		var new_bottle = bottle_scene.instantiate()
-		new_bottle.position = Vector2(
-			config.get_value("bottle_" + str(i), "position_x", 0),
-			config.get_value("bottle_" + str(i), "position_y", 0)
-		)
-		new_bottle.rotation = config.get_value("bottle_" + str(i), "rotation", 0)
-		_disable_physics_for_bottle(new_bottle)
-		jars_container.add_child(new_bottle)
-	if stats:
-		stats.update_current_count(count)
-	print("Загружено банок: ", count)
+func clear_custom_texture():
+	if custom_bottle:
+		custom_bottle.texture = null
+		custom_bottle.visible = false
+		custom_bottle.region_enabled = false
+		custom_bottle.offset = Vector2(0, 0)
+		custom_bottle.scale = custom_texture_scale
+		custom_texture_path = ""
+		if base_bottle:
+			base_bottle.visible = true
+			print("BaseBottle показана")
 
-# === Сохранить статистику в общий файл ===
-func _save_stats_to_config():
-	if stats == null:
-		return
+func _save_texture_path():
 	var config = ConfigFile.new()
-	var error = config.load(SAVE_PATH)
-	if error != OK:
-		config = ConfigFile.new()
-	config.set_value("stats", "total_bottles_spawned", stats.get_total_bottles_spawned())
-	config.set_value("stats", "current_bottles", stats.get_current_bottles())
-	error = config.save(SAVE_PATH)
+	config.load("user://Config.cfg")
+	config.set_value("bottle_texture", "path", custom_texture_path)
+	config.save("user://Config.cfg")
+
+func _load_custom_texture():
+	var config = ConfigFile.new()
+	var error = config.load("user://Config.cfg")
 	if error == OK:
-		print("Статистика сохранена в общий файл")
-	else:
-		print("Ошибка сохранения статистики: ", error)
+		var saved_path = config.get_value("bottle_texture", "path", "")
+		if saved_path != "" and ResourceLoader.exists(saved_path):
+			load_custom_texture(saved_path)
+		else:
+			if custom_bottle:
+				custom_bottle.visible = false
+			if base_bottle:
+				base_bottle.visible = true
 
-# === Загрузить статистику из общего файла ===
-func _load_stats_from_config():
-	if stats == null:
-		return
-	var config = ConfigFile.new()
-	var error = config.load(SAVE_PATH)
-	if error == OK:
-		var total = config.get_value("stats", "total_bottles_spawned", 0)
-		stats.total_bottles_spawned = total
-		stats._update_ui()
-		print("Статистика загружена из общего файла")
+func set_custom_texture_from_file(file_path: String):
+	load_custom_texture(file_path)
+	_save_texture_path()
 
-# === Установить максимальное количество банок ===
-func set_max_bottles(value: int):
-	max_bottles = value
-	print("Максимум банок установлен: ", max_bottles)
+func get_custom_texture() -> Texture2D:
+	if custom_bottle:
+		return custom_bottle.texture
+	return null
 
-# === Получить максимальное количество банок ===
-func get_max_bottles() -> int:
-	return max_bottles
-
-# === Автосохранение при выходе ===
-func _notification(what):
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		_save_game()
-
-# === Переключение настроек ===
-func _toggle_options():
-	if options.visible:
-		options.visible = false
-	else:
-		options.visible = true
+func get_custom_texture_path() -> String:
+	return custom_texture_path

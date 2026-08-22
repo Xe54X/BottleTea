@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b0bf0fdou5ckj"]
 
-[ext_resource type="Script" uid="uid://cnjw8mvp66mxw" path="res://Scripts/bottle.gd" id="1_qbwn1"]
-[ext_resource type="Script" uid="uid://c1styry47w1tj" path="res://Scripts/options.gd" id="2_fcqoe"]
-[ext_resource type="Script" uid="uid://bomsw1bepvlrt" path="res://Scripts/statistics.gd" id="3_8faaa"]
+[ext_resource type="Script" uid="uid://cnjw8mvp66mxw" path="res://Scripts/MapBottle.gd" id="1_qbwn1"]
+[ext_resource type="Script" uid="uid://c1styry47w1tj" path="res://Scripts/Options.gd" id="2_fcqoe"]
+[ext_resource type="Script" uid="uid://bomsw1bepvlrt" path="res://Scripts/Statistics.gd" id="3_8faaa"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qbwn1"]
 
@@ -12,7 +12,7 @@ spawn_center = Vector2(0, 0)
 spawn_radius = 500.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1573840227]
-position = Vector2(0, 514)
+position = Vector2(0, 511)
 shape = SubResource("WorldBoundaryShape2D_qbwn1")
 
 [node name="SpawnBottle" type="Node2D" parent="." unique_id=1082761553]
@@ -147,11 +147,45 @@ text = "Статистика:"
 
 [node name="SpawnBottle" type="Label" parent="Options/ScrollContainer/VBoxContainer/StatisticsBottle" unique_id=1018318964]
 layout_mode = 2
+text = "Text"
 
 [node name="AllSawnBottle" type="Label" parent="Options/ScrollContainer/VBoxContainer/StatisticsBottle" unique_id=1535625915]
 layout_mode = 2
+text = "Text"
 
 [node name="Line 4" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=1657614627]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CustomBottle" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=1554230038]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/CustomBottle" unique_id=1266441356]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Своя картинка:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/CustomBottle" unique_id=31537461]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer" unique_id=906818142]
+layout_mode = 2
+
+[node name="Buttons" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer" unique_id=1733833372]
+layout_mode = 2
+
+[node name="Add" type="Button" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons" unique_id=1741590981]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+text = "Добавить"
+
+[node name="Clear" type="Button" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons" unique_id=1577552731]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+text = "Очистить"
+
+[node name="Line 5" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=2128378875]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 color = Color(0, 0, 0, 1)

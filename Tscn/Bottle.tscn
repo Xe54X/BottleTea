@@ -1,21 +1,32 @@
 [gd_scene format=3 uid="uid://dtm3j5hwi61fo"]
 
-[ext_resource type="Texture2D" uid="uid://uggq20wxj8qc" path="res://Sprites/Bottle.png" id="1_fxe7y"]
+[ext_resource type="Script" uid="uid://dnsge5iw611b1" path="res://Scripts/Bottle.gd" id="1_b4s27"]
+[ext_resource type="Texture2D" uid="uid://dagex38w1mftv" path="res://Sprites/Bottle 2.png" id="1_fxe7y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m5308"]
 friction = 0.25
 bounce = 0.2
 
-[node name="Control" type="RigidBody2D" unique_id=1499210299]
+[node name="Bottle" type="RigidBody2D" unique_id=1499210299]
 mass = 0.001
 physics_material_override = SubResource("PhysicsMaterial_m5308")
 gravity_scale = 0.5
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1313476642]
-position = Vector2(0, 5.066395e-07)
-scale = Vector2(0.16518041, 0.16414489)
-texture = ExtResource("1_fxe7y")
+script = ExtResource("1_b4s27")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2006285601]
 scale = Vector2(0.678676, 0.678676)
-polygon = PackedVector2Array(-18, -50, 18, -50, 18, -46, 20, -42, 20, 44, 16, 47, 16, 50, -16, 50, -16, 47, -20, 44, -20, -42, -18, -46)
+polygon = PackedVector2Array(-17.681484, -50.09754, 17.681484, -50.09754, 17.681484, -47.150627, 20.628399, -42.730255, 20.628399, 45.67717, 17.681484, 47.150627, 17.681484, 50.09754, -17.681484, 50.09754, -17.681484, 47.150627, -20.628399, 45.67717, -20.628399, -42.730255, -17.681484, -47.150627)
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=111198264]
+clip_children = 2
+color = Color(0.6627451, 0.6745098, 0.7137255, 1)
+polygon = PackedVector2Array(-12, -34, 12, -34, 12, -32, 14, -29, 14, 31, 12, 32, 12, 34, -12, 34, -12, 32, -14, 31, -14, -29, -12, -32)
+
+[node name="BaseBottle" type="Sprite2D" parent="Polygon2D" unique_id=964975933]
+position = Vector2(0, -1)
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("1_fxe7y")
+
+[node name="CustomBottle" type="Sprite2D" parent="Polygon2D" unique_id=205121874]
+position = Vector2(0, -1)
+scale = Vector2(0.16, 0.16)

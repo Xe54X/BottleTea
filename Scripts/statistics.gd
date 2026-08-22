@@ -71,10 +71,8 @@ func _save_stats():
 	var error = config.load(CONFIG_PATH)
 	if error != OK:
 		config = ConfigFile.new()
-	
 	config.set_value("stats", "total_bottles_spawned", total_bottles_spawned)
 	config.set_value("stats", "current_bottles", current_bottles)
-	
 	error = config.save(CONFIG_PATH)
 	if error == OK:
 		print("Статистика сохранена в общий файл")
@@ -85,7 +83,6 @@ func _save_stats():
 func _load_stats():
 	var config = ConfigFile.new()
 	var error = config.load(CONFIG_PATH)
-	
 	if error == OK:
 		total_bottles_spawned = config.get_value("stats", "total_bottles_spawned", 0)
 		current_bottles = config.get_value("stats", "current_bottles", 0)
