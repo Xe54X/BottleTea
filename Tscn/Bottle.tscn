@@ -1,12 +1,15 @@
 [gd_scene format=3 uid="uid://dtm3j5hwi61fo"]
 
-[ext_resource type="Texture2D" uid="uid://b3cw72ik4hrth" path="res://Sprites/Bottle.png" id="1_fxe7y"]
+[ext_resource type="Texture2D" uid="uid://uggq20wxj8qc" path="res://Sprites/Bottle.png" id="1_fxe7y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m5308"]
+friction = 0.5
+bounce = 0.2
 
 [node name="Control" type="RigidBody2D" unique_id=1499210299]
-mass = 0.15
+mass = 0.001
 physics_material_override = SubResource("PhysicsMaterial_m5308")
+gravity_scale = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1313476642]
 position = Vector2(0, 5.066395e-07)

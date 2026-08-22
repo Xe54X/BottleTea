@@ -1,21 +1,107 @@
 [gd_scene format=3 uid="uid://b0bf0fdou5ckj"]
 
-[ext_resource type="Script" uid="uid://cnjw8mvp66mxw" path="res://Scripts/map_bottle.gd" id="1_qbwn1"]
+[ext_resource type="Script" uid="uid://cnjw8mvp66mxw" path="res://Scripts/bottle.gd" id="1_qbwn1"]
+[ext_resource type="Script" uid="uid://c1styry47w1tj" path="res://Scripts/options.gd" id="2_fcqoe"]
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0ii80"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qbwn1"]
 
 [node name="Control" type="StaticBody2D" unique_id=1147731993]
 script = ExtResource("1_qbwn1")
 spawn_center = Vector2(0, 0)
-spawn_radius = 200.0
+spawn_radius = 500.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1573840227]
 position = Vector2(0, 514)
-shape = SubResource("WorldBoundaryShape2D_0ii80")
+shape = SubResource("WorldBoundaryShape2D_qbwn1")
 
 [node name="SpawnBottle" type="Node2D" parent="." unique_id=1082761553]
-position = Vector2(0, -448)
+position = Vector2(0, -1612)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1179270862]
 position = Vector2(0, 200)
 zoom = Vector2(0.8, 0.8)
+
+[node name="Options" type="CanvasLayer" parent="." unique_id=303527540]
+script = ExtResource("2_fcqoe")
+
+[node name="BG" type="Control" parent="Options" unique_id=1399772521]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="ColorRect" parent="Options/BG" unique_id=1988942543]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+color = Color(0.39688927, 0.39688927, 0.39688924, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Options" unique_id=838224517]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Options/ScrollContainer" unique_id=1195269639]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Color" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=299265310]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ColorPicker" type="ColorPicker" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=1183437634]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+edit_alpha = false
+edit_intensity = false
+picker_shape = 1
+sampler_visible = false
+color_modes_visible = false
+sliders_visible = false
+presets_visible = false
+
+[node name="Buttons" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=1598376567]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/Color/Buttons" unique_id=833740264]
+layout_mode = 2
+text = "Apply"
+
+[node name="ResetButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/Color/Buttons" unique_id=1163886857]
+layout_mode = 2
+text = "Reset"
+
+[node name="Line 1" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=1407318933]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+
+[node name="MaxBottle" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=1952777649]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/MaxBottle" unique_id=1822799297]
+layout_mode = 2
+text = "Max bottle:"
+
+[node name="LineEdit" type="LineEdit" parent="Options/ScrollContainer/VBoxContainer/MaxBottle" unique_id=713838553]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+
+[node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/MaxBottle" unique_id=1313191261]
+custom_minimum_size = Vector2(190, 0)
+layout_mode = 2
+text = "Aplly"

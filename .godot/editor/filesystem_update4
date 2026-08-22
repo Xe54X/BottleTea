@@ -1,1 +1,5 @@
+res://Scripts/map_bottle.gd
 res://Tscn/MapBottle.tscn
+res://Scripts/options.gd
+res://Scripts/bottle.gd
+res://Tscn/Bottle.tscn
