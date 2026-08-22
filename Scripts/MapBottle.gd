@@ -14,6 +14,9 @@ const BOTTLES_DATA_PATH = "user://BottlesData.cfg"
 @export var max_spawn_attempts: int = 30                                         ## Максимальное количество попыток найти свободное место
 @export var max_bottles: int = 450                                               ## Максимальное количество банок
 
+# Флаг для блокировки игрового ввода
+var game_input_blocked: bool = false
+
 func _ready() -> void:
 	options.visible = false
 	_load_bottles()
@@ -22,6 +25,15 @@ func _ready() -> void:
 		stats.update_current_count(jars_container.get_child_count())
 
 func _process(_delta: float) -> void:
+	# Клавиша O должна работать ВСЕГДА (для открытия/закрытия настроек)
+	if Input.is_action_just_pressed("options"):
+		_toggle_options()
+		return  # Важно: после обработки O выходим
+	
+	# Если игра на паузе - не обрабатываем остальной игровой ввод
+	if game_input_blocked:
+		return
+	
 	if Input.is_action_just_pressed("spawn_bottle"):
 		_spawn_bottle()
 	if Input.is_action_just_pressed("despawn_bottle"):
@@ -32,8 +44,23 @@ func _process(_delta: float) -> void:
 		_save_game()
 	if Input.is_action_just_pressed("load_game"):
 		_load_game()
-	if Input.is_action_just_pressed("options"):
-		_toggle_options()
+
+# === Переключение настроек ===
+func _toggle_options():
+	if options.visible:
+		# Закрываем настройки
+		options.visible = false
+		game_input_blocked = false
+		# Возвращаем обычный режим курсора (показываем курсор)
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		print("Настройки закрыты, игра продолжается")
+	else:
+		# Открываем настройки
+		options.visible = true
+		game_input_blocked = true
+		# Показываем курсор для работы с настройками
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		print("Настройки открыты, игра на паузе")
 
 func set_custom_texture_for_bottle(texture_path: String):
 	print("Путь: ", texture_path)
@@ -253,9 +280,3 @@ func get_max_bottles() -> int:
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_save_game()
-
-func _toggle_options():
-	if options.visible:
-		options.visible = false
-	else:
-		options.visible = true

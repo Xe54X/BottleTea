@@ -9,19 +9,20 @@ extends CanvasLayer
 @onready var clear_image_button: Button = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons/Clear
 @onready var image_label: Label = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview/ImagePathLabel
 @onready var image_preview: TextureRect = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview/ImagePreview/TextureRect
-
-# === Новые узлы для зума ===
 @onready var zoom_slider: HSlider = $ScrollContainer/VBoxContainer/Zoom/HBoxContainer2/HBoxContainer/HSlider
 @onready var zoom_label: Label = $ScrollContainer/VBoxContainer/Zoom/HBoxContainer2/HBoxContainer/Label
 @onready var zoom_reset_button: Button = $ScrollContainer/VBoxContainer/Zoom/HBoxContainer2/Button
 
 const SETTINGS_PATH = "user://Config.cfg"
 
+var camera_scroll_speed: float = 10.0
+var camera_min_y: float = -1000.0
+var camera_max_y: float = 1000.0
+
 func _ready() -> void:
 	_load_settings()
-	_load_window_size()  # Загружаем размер окна
-	_load_saved_zoom()   # Загружаем зум
-	
+	_load_window_size()
+	_load_saved_zoom()
 	if apply_button:
 		apply_button.pressed.connect(_apply_color)
 	if reset_button:
@@ -49,11 +50,34 @@ func _ready() -> void:
 		zoom_slider.value_changed.connect(_on_zoom_changed)
 	if zoom_reset_button:
 		zoom_reset_button.pressed.connect(_reset_zoom)
-	
-	# Подключаем сигнал изменения размера окна
 	get_tree().root.size_changed.connect(_on_window_size_changed)
-	
 	call_deferred("_load_saved_image_deferred")
+
+func _input(event: InputEvent) -> void:
+	if visible:
+		return
+	if event is InputEventMouseButton:
+		if event.pressed:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				_scroll_camera(-camera_scroll_speed)
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				_scroll_camera(camera_scroll_speed)
+
+# === Переключение видимости настроек с паузой ===
+func toggle_settings():
+	visible = not visible
+
+# === Скролл камеры ===
+func _scroll_camera(amount: float):
+	var camera = _get_camera()
+	if camera:
+		var new_position = camera.position
+		new_position.y += amount
+		new_position.y = clamp(new_position.y, camera_min_y, camera_max_y)
+		camera.position = new_position
+		print("Камера перемещена: ", new_position)
+	else:
+		print("Камера не найдена!")
 
 # === Обработка изменения размера окна ===
 func _on_window_size_changed():
