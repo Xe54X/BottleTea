@@ -6,7 +6,7 @@ extends StaticBody2D
 @onready var options: CanvasLayer = $Options
 @onready var stats: VBoxContainer = $Options/ScrollContainer/VBoxContainer/StatisticsBottle
 
-const SAVE_PATH = "user://bottles_save.cfg"
+const SAVE_PATH = "user://Config.cfg"
 
 @export var spawn_center: Vector2 = Vector2(500, 300)                            ## Центральная точка спавна
 @export var spawn_radius: float = 20.0                                           ## Радиус спавна вокруг точки
@@ -28,9 +28,9 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("clear_bottle"):                             # Удалить все банки
 		_clear_all_bottles()
 	if Input.is_action_just_pressed("save_game"):                                # Сохранить
-		_save_bottles()
+		_save_game()
 	if Input.is_action_just_pressed("load_game"):                                # Загрузить
-		_load_bottles()
+		_load_game()
 	if Input.is_action_just_pressed("options"):                                  # Настройки
 		_toggle_options()
 
@@ -54,6 +54,7 @@ func _spawn_bottle():
 	jars_container.add_child(new_bottle)
 	if stats:
 		stats.on_bottle_spawned()
+		_save_stats_to_config()
 	print("Создана банка! Всего: ", jars_container.get_child_count())
 
 # === Поиск свободной позиции для спавна ===
@@ -105,6 +106,7 @@ func _despawn_last_bottle():
 	last_bottle.queue_free()
 	if stats:
 		stats.on_bottle_removed()
+		_save_stats_to_config()
 	print("Удалена банка! Осталось: ", jars_container.get_child_count() - 1)
 
 # === Удалить все банки ===
@@ -115,26 +117,41 @@ func _clear_all_bottles():
 		child.queue_free()
 	if stats:
 		stats.on_all_bottles_cleared()
+		_save_stats_to_config()
 	print("Удалены все банки!")
 
-# === Сохранить с помощью ConfigFile ===
+# === Сохранить игру ===
+func _save_game():
+	_save_bottles()
+	_save_stats_to_config()
+	print("Игра сохранена!")
+
+# === Загрузить игру ===
+func _load_game():
+	_load_bottles()
+	print("Игра загружена!")
+
+# === Сохранить банки ===
 func _save_bottles():
 	if jars_container == null:
 		return
 	var config = ConfigFile.new()
+	var error = config.load(SAVE_PATH)
+	if error != OK:
+		config = ConfigFile.new()
 	config.set_value("bottles", "count", jars_container.get_child_count())
 	for i in range(jars_container.get_child_count()):
 		var bottle = jars_container.get_child(i)
 		config.set_value("bottle_" + str(i), "position_x", bottle.position.x)
 		config.set_value("bottle_" + str(i), "position_y", bottle.position.y)
 		config.set_value("bottle_" + str(i), "rotation", bottle.rotation)
-	var error = config.save(SAVE_PATH)
+	error = config.save(SAVE_PATH)
 	if error == OK:
 		print("Сохранено банок: ", jars_container.get_child_count())
 	else:
 		print("Ошибка сохранения: ", error)
 
-# === Загрузить с помощью ConfigFile ===
+# === Загрузить банки ===
 func _load_bottles():
 	if jars_container == null:
 		return
@@ -158,10 +175,47 @@ func _load_bottles():
 		stats.update_current_count(count)
 	print("Загружено банок: ", count)
 
+# === Сохранить статистику в общий файл ===
+func _save_stats_to_config():
+	if stats == null:
+		return
+	var config = ConfigFile.new()
+	var error = config.load(SAVE_PATH)
+	if error != OK:
+		config = ConfigFile.new()
+	config.set_value("stats", "total_bottles_spawned", stats.get_total_bottles_spawned())
+	config.set_value("stats", "current_bottles", stats.get_current_bottles())
+	error = config.save(SAVE_PATH)
+	if error == OK:
+		print("Статистика сохранена в общий файл")
+	else:
+		print("Ошибка сохранения статистики: ", error)
+
+# === Загрузить статистику из общего файла ===
+func _load_stats_from_config():
+	if stats == null:
+		return
+	var config = ConfigFile.new()
+	var error = config.load(SAVE_PATH)
+	if error == OK:
+		var total = config.get_value("stats", "total_bottles_spawned", 0)
+		stats.total_bottles_spawned = total
+		stats._update_ui()
+		print("Статистика загружена из общего файла")
+
+# === Установить максимальное количество банок ===
+func set_max_bottles(value: int):
+	max_bottles = value
+	print("Максимум банок установлен: ", max_bottles)
+
+# === Получить максимальное количество банок ===
+func get_max_bottles() -> int:
+	return max_bottles
+
 # === Автосохранение при выходе ===
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		_save_bottles()
+		_save_game()
 
 # === Переключение настроек ===
 func _toggle_options():

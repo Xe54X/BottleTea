@@ -6,7 +6,7 @@ extends VBoxContainer
 var current_bottles: int = 0
 var total_bottles_spawned: int = 0
 
-const STATS_PATH = "user://bottle_stats.cfg"
+const CONFIG_PATH = "user://Config.cfg"
 
 func _ready() -> void:
 	_load_stats()
@@ -44,7 +44,15 @@ func on_all_bottles_cleared():
 func update_current_count(count: int):
 	current_bottles = count
 	_update_ui()
+	_save_stats()
 	print("Обновлено текущее количество банок: ", current_bottles)
+
+# === Загрузка статистики из общего файла ===
+func load_stats(total: int, current: int):
+	total_bottles_spawned = total
+	current_bottles = current
+	_update_ui()
+	print("Статистика загружена из общего файла")
 
 # === Обновление UI ===
 func _update_ui():
@@ -57,26 +65,35 @@ func _update_ui():
 	else:
 		print("Ошибка: all_spawn_bottle_label не найден!")
 
-# === Сохранение статистики ===
+# === Сохранение статистики в общий файл ===
 func _save_stats():
 	var config = ConfigFile.new()
+	var error = config.load(CONFIG_PATH)
+	if error != OK:
+		config = ConfigFile.new()
+	
 	config.set_value("stats", "total_bottles_spawned", total_bottles_spawned)
-	var error = config.save(STATS_PATH)
+	config.set_value("stats", "current_bottles", current_bottles)
+	
+	error = config.save(CONFIG_PATH)
 	if error == OK:
-		print("Статистика сохранена: Всего банок - ", total_bottles_spawned)
+		print("Статистика сохранена в общий файл")
 	else:
 		print("Ошибка сохранения статистики: ", error)
 
-# === Загрузка статистики ===
+# === Загрузка статистики из общего файла ===
 func _load_stats():
 	var config = ConfigFile.new()
-	var error = config.load(STATS_PATH)
+	var error = config.load(CONFIG_PATH)
+	
 	if error == OK:
 		total_bottles_spawned = config.get_value("stats", "total_bottles_spawned", 0)
+		current_bottles = config.get_value("stats", "current_bottles", 0)
 		print("Статистика загружена: Всего банок - ", total_bottles_spawned)
 	else:
-		print("Файл статистики не найден, начинаем с нуля")
+		print("Файл конфигурации не найден, начинаем с нуля")
 		total_bottles_spawned = 0
+		current_bottles = 0
 
 # === Сброс статистики ===
 func reset_stats():
