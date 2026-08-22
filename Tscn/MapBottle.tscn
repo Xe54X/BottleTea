@@ -169,11 +169,22 @@ text = "Своя картинка:"
 [node name="HBoxContainer" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/CustomBottle" unique_id=31537461]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer" unique_id=906818142]
+[node name="Preview" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer" unique_id=2014836619]
 layout_mode = 2
+
+[node name="ImagePreview" type="TextureRect" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview" unique_id=851997683]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+expand_mode = 1
+
+[node name="ImagePathLabel" type="Label" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview" unique_id=906818142]
+layout_mode = 2
+text = "Text"
+horizontal_alignment = 1
 
 [node name="Buttons" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer" unique_id=1733833372]
 layout_mode = 2
+alignment = 1
 
 [node name="Add" type="Button" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons" unique_id=1741590981]
 custom_minimum_size = Vector2(190, 0)

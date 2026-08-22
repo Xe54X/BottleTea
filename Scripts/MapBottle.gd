@@ -1,7 +1,5 @@
 extends StaticBody2D
 
-@export var bottle_scene: PackedScene = preload("res://Tscn/Bottle.tscn")
-
 @onready var jars_container = $SpawnBottle
 @onready var options: CanvasLayer = $Options
 @onready var stats: VBoxContainer = $Options/ScrollContainer/VBoxContainer/StatisticsBottle
@@ -9,11 +7,12 @@ extends StaticBody2D
 const SETTINGS_PATH = "user://Config.cfg"
 const BOTTLES_DATA_PATH = "user://BottlesData.cfg"
 
-@export var spawn_center: Vector2 = Vector2(500, 300)
-@export var spawn_radius: float = 20.0
-@export var min_distance_between_bottles: float = 40.0
-@export var max_spawn_attempts: int = 30
-@export var max_bottles: int = 450
+@export var bottle_scene: PackedScene = preload("res://Tscn/Bottle.tscn")        ## Банка
+@export var spawn_center: Vector2 = Vector2(500, 300)                            ## Центр спавна
+@export var spawn_radius: float = 20.0                                           ## Радиус спавна
+@export var min_distance_between_bottles: float = 40.0                           ## Минимальное расстояние между банками
+@export var max_spawn_attempts: int = 30                                         ## Максимальное количество попыток найти свободное место
+@export var max_bottles: int = 450                                               ## Максимальное количество банок
 
 func _ready() -> void:
 	options.visible = false
@@ -37,10 +36,12 @@ func _process(_delta: float) -> void:
 		_toggle_options()
 
 func set_custom_texture_for_bottle(texture_path: String):
-	print("=== set_custom_texture_for_bottle ===")
 	print("Путь: ", texture_path)
 	if jars_container == null:
 		print("Ошибка: jars_container не инициализирован!")
+		return
+	if not FileAccess.file_exists(texture_path):
+		print("Ошибка: файл не существует - ", texture_path)
 		return
 	var count = 0
 	for child in jars_container.get_children():
@@ -92,7 +93,7 @@ func _spawn_bottle():
 	var config = ConfigFile.new()
 	config.load(SETTINGS_PATH)
 	var saved_texture = config.get_value("settings", "custom_bottle_texture", "")
-	if saved_texture != "" and ResourceLoader.exists(saved_texture):
+	if saved_texture != "" and FileAccess.file_exists(saved_texture):
 		if new_bottle.has_method("load_custom_texture"):
 			new_bottle.load_custom_texture(saved_texture)
 			print("Загружена картинка для новой банки")
@@ -206,7 +207,7 @@ func _load_bottles():
 		)
 		new_bottle.rotation = config.get_value("bottle_" + str(i), "rotation", 0)
 		_disable_physics_for_bottle(new_bottle)
-		if saved_texture != "" and ResourceLoader.exists(saved_texture):
+		if saved_texture != "" and FileAccess.file_exists(saved_texture):
 			if new_bottle.has_method("load_custom_texture"):
 				new_bottle.load_custom_texture(saved_texture)
 		jars_container.add_child(new_bottle)

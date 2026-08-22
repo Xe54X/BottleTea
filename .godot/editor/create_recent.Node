@@ -1,7 +1,7 @@
 TextureRect
+VBoxContainer
 Sprite2D
 Label
-VBoxContainer
 Button
 HBoxContainer
 Polygon2D

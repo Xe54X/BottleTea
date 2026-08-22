@@ -5,8 +5,6 @@ extends CanvasLayer
 @onready var reset_button: Button = $ScrollContainer/VBoxContainer/Color/Color/Buttons/ResetButton
 @onready var max_bottle_line_edit: LineEdit = $ScrollContainer/VBoxContainer/VBoxContainer/MaxBottle/LineEdit
 @onready var max_bottle_apply_button: Button = $ScrollContainer/VBoxContainer/VBoxContainer/MaxBottle/ApplyButton
-
-# === Новые узлы для картинок ===
 @onready var add_image_button: Button = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons/Add
 @onready var clear_image_button: Button = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons/Clear
 @onready var image_label: Label = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Label
@@ -72,18 +70,22 @@ func _apply_max_bottles(_text: String = ""):
 
 # === Добавить картинку через нативный диалог Windows ===
 func _add_image():
-	# Получаем путь к рабочему столу
-	var desktop_path = _get_desktop_path()
-	
-	# Показываем нативный диалог Windows
+	print("=== _add_image ===")
+	var filters = PackedStringArray()
+	filters.append("*.png")
+	filters.append("*.jpg")
+	filters.append("*.jpeg")
+	filters.append("*.bmp")
+	filters.append("*.webp")
+	filters.append("*.svg")
 	DisplayServer.file_dialog_show(
-		"Выберите картинку для банки",           # Заголовок
-		desktop_path,                            # Начальная директория
-		"",                                      # Имя файла по умолчанию
-		false,                                   # Показывать скрытые файлы
-		DisplayServer.FILE_DIALOG_MODE_OPEN_FILE, # Режим открытия файла
-		["*.png ; *.jpg ; *.jpeg ; *.bmp ; *.webp ; *.svg"],  # Фильтры
-		_on_image_selected                       # Callback функция
+		"Выберите картинку для банки",
+		_get_desktop_path(),
+		"",
+		false,
+		DisplayServer.FILE_DIALOG_MODE_OPEN_FILE,
+		filters,
+		_on_image_selected
 	)
 
 # === Получение пути к рабочему столу ===
@@ -101,11 +103,15 @@ func _get_desktop_path() -> String:
 
 # === Обработка выбора картинки ===
 func _on_image_selected(status: bool, selected_paths: PackedStringArray, _selected_filter_index: int):
+	print("=== _on_image_selected ===")
+	print("Статус: ", status)
+	print("Выбранные пути: ", selected_paths)
 	if status and selected_paths.size() > 0:
 		var path = selected_paths[0]
 		if not FileAccess.file_exists(path):
-			print("Ошибка: файл не существует!")
+			print("Ошибка: файл не существует! Путь: ", path)
 			return
+		print("Файл найден: ", path)
 		if image_label:
 			image_label.text = "Файл: " + path.get_file()
 		var main_scene = get_tree().current_scene
@@ -118,12 +124,13 @@ func _on_image_selected(status: bool, selected_paths: PackedStringArray, _select
 		config.load(SETTINGS_PATH)
 		config.set_value("settings", "custom_bottle_texture", path)
 		config.save(SETTINGS_PATH)
-		print("Выбрана картинка: ", path)
+		print("Картинка сохранена: ", path)
 	else:
-		print("Выбор картинки отменён")
+		print("Выбор картинки отменён или файл не выбран")
 
 # === Очистка картинки ===
 func _clear_image():
+	print("=== _clear_image ===")
 	if image_label:
 		image_label.text = "Файл: нет"
 	var main_scene = get_tree().current_scene
@@ -140,10 +147,12 @@ func _clear_image():
 
 # === Отложенная загрузка сохранённой картинки ===
 func _load_saved_image_deferred():
+	print("=== _load_saved_image_deferred ===")
 	var config = ConfigFile.new()
 	var error = config.load(SETTINGS_PATH)
 	if error == OK:
 		var saved_path = config.get_value("settings", "custom_bottle_texture", "")
+		print("Сохранённый путь: ", saved_path)
 		if saved_path != "" and FileAccess.file_exists(saved_path):
 			if image_label:
 				image_label.text = "Файл: " + saved_path.get_file()
@@ -151,9 +160,14 @@ func _load_saved_image_deferred():
 			if main_scene and main_scene.has_method("set_custom_texture_for_bottle"):
 				main_scene.set_custom_texture_for_bottle(saved_path)
 				print("Загружена сохранённая картинка: ", saved_path)
+			else:
+				print("Ошибка: основная сцена не имеет метода set_custom_texture_for_bottle!")
 		else:
 			if image_label:
 				image_label.text = "Файл: нет"
+			print("Сохранённая картинка не найдена")
+	else:
+		print("Файл настроек не найден")
 
 # === Сохранение всех настроек ===
 func _save_settings():
@@ -203,7 +217,6 @@ func _load_settings():
 	var main_scene = get_tree().current_scene
 	if main_scene and main_scene.has_method("set_max_bottles"):
 		main_scene.set_max_bottles(max_value)
-	
 	print("Настройки загружены")
 
 # === Получение текущего максимума банок ===

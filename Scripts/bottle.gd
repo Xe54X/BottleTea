@@ -22,33 +22,41 @@ func _setup_custom_bottle():
 		custom_bottle.scale = custom_texture_scale
 		print("CustomBottle настроен, Scale: ", custom_bottle.scale)
 
+# === ЗАГРУЗКА КАРТИНКИ ИЗ ЛЮБОГО МЕСТА ===
 func load_custom_texture(texture_path: String):
+	print("=== load_custom_texture ===")
+	print("Путь: ", texture_path)
 	if custom_bottle == null:
+		print("Ошибка: custom_bottle == null")
 		return
 	if texture_path == "" or texture_path == "null":
+		print("Пустой путь, очищаем")
 		clear_custom_texture()
 		return
-	if not ResourceLoader.exists(texture_path):
+	if not FileAccess.file_exists(texture_path):
 		print("Ошибка: файл не найден - ", texture_path)
 		return
-	var texture = load(texture_path)
-	if texture:
-		custom_bottle.texture = texture
-		custom_bottle.scale = custom_texture_scale
-		custom_bottle.rotation = 0
-		custom_bottle.offset = Vector2(0, 0)
-		custom_bottle.centered = true
-		custom_bottle.region_enabled = false
-		custom_bottle.visible = true
-		if base_bottle:
-			base_bottle.visible = false
-			print("BaseBottle скрыта")
-		custom_texture_path = texture_path
-		print("Текстура установлена: ", texture.get_size())
-		print("Scale CustomBottle: ", custom_bottle.scale)
-		_save_texture_path()
-	else:
-		print("Ошибка загрузки текстуры!")
+	print("Файл найден, загружаем...")
+	var image = Image.load_from_file(texture_path)
+	if image:
+		var texture = ImageTexture.create_from_image(image)
+		if texture:
+			custom_bottle.texture = texture
+			custom_bottle.scale = custom_texture_scale
+			custom_bottle.rotation = 0
+			custom_bottle.offset = Vector2(0, 0)
+			custom_bottle.centered = true
+			custom_bottle.region_enabled = false
+			custom_bottle.visible = true
+			if base_bottle:
+				base_bottle.visible = false
+				print("BaseBottle скрыта")
+			custom_texture_path = texture_path
+			_save_texture_path()
+			print("✅ Текстура установлена! Размер: ", texture.get_size())
+			print("Scale CustomBottle: ", custom_bottle.scale)
+			return
+	print("❌ Ошибка загрузки изображения!")
 
 func clear_custom_texture():
 	if custom_bottle:
@@ -61,10 +69,13 @@ func clear_custom_texture():
 		if base_bottle:
 			base_bottle.visible = true
 			print("BaseBottle показана")
+		_save_texture_path()
 
 func _save_texture_path():
 	var config = ConfigFile.new()
-	config.load("user://Config.cfg")
+	var error = config.load("user://Config.cfg")
+	if error != OK:
+		config = ConfigFile.new()
 	config.set_value("bottle_texture", "path", custom_texture_path)
 	config.save("user://Config.cfg")
 
@@ -73,7 +84,7 @@ func _load_custom_texture():
 	var error = config.load("user://Config.cfg")
 	if error == OK:
 		var saved_path = config.get_value("bottle_texture", "path", "")
-		if saved_path != "" and ResourceLoader.exists(saved_path):
+		if saved_path != "" and FileAccess.file_exists(saved_path):
 			load_custom_texture(saved_path)
 		else:
 			if custom_bottle:
