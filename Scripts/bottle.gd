@@ -20,6 +20,10 @@ const SAVE_PATH = "user://bottles_save.cfg"
 
 func _ready() -> void:
 	options.visible = false
+	
+	# === Загружаем максимум банок из настроек ===
+	_load_max_bottles_from_settings()
+	
 	_load_bottles()
 	_disable_physics_for_all_bottles()  # Отключаем физику после загрузки
 
@@ -41,6 +45,45 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("options"):
 		_toggle_options()
+
+# ============================================
+# === НОВЫЕ ФУНКЦИИ ДЛЯ РАБОТЫ С НАСТРОЙКАМИ ===
+# ============================================
+
+# === Загрузка максимума банок из настроек ===
+func _load_max_bottles_from_settings():
+	var config = ConfigFile.new()
+	var error = config.load("user://settings.cfg")
+	
+	if error == OK:
+		var saved_max = config.get_value("game", "max_bottles", 450)
+		max_bottles = saved_max
+		print("Загружен лимит банок из настроек: ", max_bottles)
+	else:
+		print("Настройки не найдены, использую стандартный лимит: ", max_bottles)
+
+# === Установка нового максимума (вызывается из настроек) ===
+func set_max_bottles(new_max: int):
+	if new_max > 0:
+		max_bottles = new_max
+		print("Новый максимум банок: ", max_bottles)
+		
+		# Если текущих банок больше нового лимита, удаляем лишние
+		if jars_container:
+			while jars_container.get_child_count() > max_bottles:
+				var last_bottle = jars_container.get_child(jars_container.get_child_count() - 1)
+				last_bottle.queue_free()
+				print("Удалена лишняя банка (превышен лимит)")
+	else:
+		print("Ошибка: максимальное количество должно быть больше 0!")
+
+# === Получение текущего максимума ===
+func get_max_bottles() -> int:
+	return max_bottles
+
+# ============================================
+# === ОСТАЛЬНЫЕ ФУНКЦИИ (без изменений) ===
+# ============================================
 
 func _spawn_bottle():
 	if jars_container == null:
@@ -66,7 +109,7 @@ func _spawn_bottle():
 	_disable_physics_for_bottle(new_bottle)
 	
 	jars_container.add_child(new_bottle)
-	print("Создана банка! Всего: ", jars_container.get_child_count())
+	print("Создана банка! Всего: ", jars_container.get_child_count(), " / ", max_bottles)
 
 func _disable_physics_for_bottle(bottle: Node) -> void:
 	if bottle is StaticBody2D:

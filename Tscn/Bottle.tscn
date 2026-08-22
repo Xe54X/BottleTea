@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://uggq20wxj8qc" path="res://Sprites/Bottle.png" id="1_fxe7y"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m5308"]
-friction = 0.5
+friction = 0.25
 bounce = 0.2
 
 [node name="Control" type="RigidBody2D" unique_id=1499210299]
