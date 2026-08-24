@@ -23,7 +23,6 @@ position = Vector2(0, 200)
 zoom = Vector2(0.8, 0.8)
 
 [node name="Options" type="CanvasLayer" parent="." unique_id=303527540]
-visible = false
 script = ExtResource("2_fcqoe")
 
 [node name="BG" type="Control" parent="Options" unique_id=1399772521]
@@ -59,7 +58,7 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer" unique_id=1525855072]
 layout_mode = 2
 theme_override_font_sizes/font_size = 25
-text = "Настройки"
+text = "loc_Settings"
 horizontal_alignment = 1
 
 [node name="Line 1" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=1407318933]
@@ -76,7 +75,7 @@ alignment = 1
 [node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=152684021]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Цвет фона:"
+text = "loc_ColorBG"
 
 [node name="Color" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Color" unique_id=1143216220]
 layout_mode = 2
@@ -100,36 +99,36 @@ alignment = 1
 
 [node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/Color/Color/Buttons" unique_id=833740264]
 layout_mode = 2
-text = "Применить"
+text = "loc_Apply"
 
 [node name="ResetButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/Color/Color/Buttons" unique_id=1163886857]
 layout_mode = 2
-text = "Сбросить"
+text = "loc_Reset"
 
 [node name="Line 2" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=1926254049]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 color = Color(0, 0, 0, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=1279039494]
+[node name="MaxBottle" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=1279039494]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/VBoxContainer" unique_id=1822799297]
+[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/MaxBottle" unique_id=1822799297]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Максимум банок:"
+text = "loc_MaxBottle"
 
-[node name="MaxBottle" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/VBoxContainer" unique_id=1952777649]
+[node name="MaxBottle" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/MaxBottle" unique_id=1952777649]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="Options/ScrollContainer/VBoxContainer/VBoxContainer/MaxBottle" unique_id=713838553]
+[node name="LineEdit" type="LineEdit" parent="Options/ScrollContainer/VBoxContainer/MaxBottle/MaxBottle" unique_id=713838553]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 
-[node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/VBoxContainer/MaxBottle" unique_id=1313191261]
+[node name="ApplyButton" type="Button" parent="Options/ScrollContainer/VBoxContainer/MaxBottle/MaxBottle" unique_id=1313191261]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
-text = "Применить"
+text = "loc_Apply"
 
 [node name="Line 3" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=773403746]
 custom_minimum_size = Vector2(0, 2)
@@ -143,7 +142,7 @@ script = ExtResource("3_8faaa")
 [node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/StatisticsBottle" unique_id=682697391]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Статистика:"
+text = "loc_Statistics"
 
 [node name="SpawnBottle" type="Label" parent="Options/ScrollContainer/VBoxContainer/StatisticsBottle" unique_id=1018318964]
 layout_mode = 2
@@ -164,7 +163,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/CustomBottle" unique_id=1266441356]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Своя картинка:"
+text = "loc_CustomImg"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/CustomBottle" unique_id=31537461]
 layout_mode = 2
@@ -202,12 +201,12 @@ alignment = 1
 [node name="Add" type="Button" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons" unique_id=1741590981]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
-text = "Добавить"
+text = "loc_Add"
 
 [node name="Clear" type="Button" parent="Options/ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons" unique_id=1577552731]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
-text = "Очистить"
+text = "loc_Reset"
 
 [node name="Line 5" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=2128378875]
 custom_minimum_size = Vector2(0, 2)
@@ -220,7 +219,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/Zoom" unique_id=1267103493]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Приблежение:"
+text = "loc_Zoom"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Zoom" unique_id=1581665270]
 layout_mode = 2
@@ -243,9 +242,37 @@ horizontal_alignment = 1
 [node name="Button" type="Button" parent="Options/ScrollContainer/VBoxContainer/Zoom/HBoxContainer2" unique_id=1819390968]
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
-text = "Сбросить"
+text = "loc_Reset"
 
 [node name="Line 6" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=672043259]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Localization" type="VBoxContainer" parent="Options/ScrollContainer/VBoxContainer" unique_id=697297268]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options/ScrollContainer/VBoxContainer/Localization" unique_id=1748070889]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "loc_Language"
+
+[node name="Buttons" type="HBoxContainer" parent="Options/ScrollContainer/VBoxContainer/Localization" unique_id=1649857431]
+layout_mode = 2
+
+[node name="ENG" type="Button" parent="Options/ScrollContainer/VBoxContainer/Localization/Buttons" unique_id=168911575]
+layout_mode = 2
+text = "ENG"
+
+[node name="RUS" type="Button" parent="Options/ScrollContainer/VBoxContainer/Localization/Buttons" unique_id=740329124]
+layout_mode = 2
+text = "RUS"
+
+[node name="JPN" type="Button" parent="Options/ScrollContainer/VBoxContainer/Localization/Buttons" unique_id=967632067]
+layout_mode = 2
+text = "JPN"
+
+[node name="Line 7" type="ColorRect" parent="Options/ScrollContainer/VBoxContainer" unique_id=2073083137]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 color = Color(0, 0, 0, 1)

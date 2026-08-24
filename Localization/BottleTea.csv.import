@@ -1,0 +1,19 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://btajpwsj55st1"
+
+[deps]
+
+files=["res://Localization/BottleTea.en.translation", "res://Localization/BottleTea.ru.translation", "res://Localization/BottleTea.ja.translation"]
+
+source_file="res://Localization/BottleTea.csv"
+dest_files=["res://Localization/BottleTea.en.translation", "res://Localization/BottleTea.ru.translation", "res://Localization/BottleTea.ja.translation"]
+
+[params]
+
+compress=1
+delimiter=0
+unescape_keys=false
+unescape_translations=true

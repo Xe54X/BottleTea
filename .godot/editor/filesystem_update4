@@ -1,10 +1,7 @@
-res://Scripts/map_bottle.gd
 res://Tscn/MapBottle.tscn
-res://Scripts/options.gd
-res://Scripts/bottle.gd
-res://Tscn/Bottle.tscn
-res://Scripts/statistics.gd
 res://Scripts/Options.gd
-res://Scripts/Statistics.gd
-res://Scripts/Bottle.gd
+res://Localization/BottleTea.en.translation
+res://Localization/BottleTea.ru.translation
+res://Localization/BottleTea.ja.translation
 res://Scripts/MapBottle.gd
+res://Scripts/Bottle.gd

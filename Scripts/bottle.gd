@@ -1,16 +1,21 @@
 extends RigidBody2D
 
+#===================================#
 @onready var base_bottle: Sprite2D = $Polygon2D/BaseBottle
 @onready var custom_bottle: Sprite2D = $Polygon2D/CustomBottle
 
+#===================================#
 var custom_texture_path: String = ""
 
+#===================================#
 @export var custom_texture_scale: Vector2 = Vector2(0.16, 0.16)
 
+#===================================#
 func _ready():
 	_setup_custom_bottle()
 	_load_custom_texture()
 
+#===================================#
 func _setup_custom_bottle():
 	if custom_bottle:
 		custom_bottle.position = Vector2(0, 0)
@@ -20,23 +25,17 @@ func _setup_custom_bottle():
 		custom_bottle.visible = true
 		custom_bottle.region_enabled = false
 		custom_bottle.scale = custom_texture_scale
-		print("CustomBottle настроен, Scale: ", custom_bottle.scale)
 
-# === ЗАГРУЗКА КАРТИНКИ ИЗ ЛЮБОГО МЕСТА ===
+#===================================#
+#Загрузка картинки из любого места
 func load_custom_texture(texture_path: String):
-	print("=== load_custom_texture ===")
-	print("Путь: ", texture_path)
 	if custom_bottle == null:
-		print("Ошибка: custom_bottle == null")
 		return
 	if texture_path == "" or texture_path == "null":
-		print("Пустой путь, очищаем")
 		clear_custom_texture()
 		return
 	if not FileAccess.file_exists(texture_path):
-		print("Ошибка: файл не найден - ", texture_path)
 		return
-	print("Файл найден, загружаем...")
 	var image = Image.load_from_file(texture_path)
 	if image:
 		var texture = ImageTexture.create_from_image(image)
@@ -50,14 +49,11 @@ func load_custom_texture(texture_path: String):
 			custom_bottle.visible = true
 			if base_bottle:
 				base_bottle.visible = false
-				print("BaseBottle скрыта")
 			custom_texture_path = texture_path
 			_save_texture_path()
-			print("✅ Текстура установлена! Размер: ", texture.get_size())
-			print("Scale CustomBottle: ", custom_bottle.scale)
 			return
-	print("❌ Ошибка загрузки изображения!")
 
+#===================================#
 func clear_custom_texture():
 	if custom_bottle:
 		custom_bottle.texture = null
@@ -68,9 +64,9 @@ func clear_custom_texture():
 		custom_texture_path = ""
 		if base_bottle:
 			base_bottle.visible = true
-			print("BaseBottle показана")
 		_save_texture_path()
 
+#===================================#
 func _save_texture_path():
 	var config = ConfigFile.new()
 	var error = config.load("user://Config.cfg")
@@ -79,6 +75,7 @@ func _save_texture_path():
 	config.set_value("bottle_texture", "path", custom_texture_path)
 	config.save("user://Config.cfg")
 
+#===================================#
 func _load_custom_texture():
 	var config = ConfigFile.new()
 	var error = config.load("user://Config.cfg")
@@ -92,14 +89,19 @@ func _load_custom_texture():
 			if base_bottle:
 				base_bottle.visible = true
 
+#===================================#
 func set_custom_texture_from_file(file_path: String):
 	load_custom_texture(file_path)
 	_save_texture_path()
 
+#===================================#
 func get_custom_texture() -> Texture2D:
 	if custom_bottle:
 		return custom_bottle.texture
 	return null
 
+#===================================#
 func get_custom_texture_path() -> String:
 	return custom_texture_path
+
+#===================================#

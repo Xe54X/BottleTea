@@ -1,7 +1,7 @@
-HBoxContainer
-VBoxContainer
 Button
 Label
+HBoxContainer
+VBoxContainer
 HSlider
 ColorRect
 Control
