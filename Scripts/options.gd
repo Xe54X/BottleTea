@@ -25,6 +25,7 @@ var camera_scroll_speed: float = 10.0
 var camera_min_y: float = -1000.0
 var camera_max_y: float = 1000.0
 var current_language := "en"
+var zoom_step: float = 0.1  # Шаг изменения зума
 
 #===================================#
 func _ready() -> void:
@@ -98,12 +99,36 @@ func _save_language(lang: String):
 func _input(event: InputEvent) -> void:
 	if visible:
 		return
+	
 	if event is InputEventMouseButton:
 		if event.pressed:
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				_scroll_camera(-camera_scroll_speed)
-			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				_scroll_camera(camera_scroll_speed)
+			# Проверяем, зажат ли Ctrl
+			if Input.is_key_pressed(KEY_CTRL):
+				# Если Ctrl зажат - меняем зум
+				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+					_zoom_in()
+				elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+					_zoom_out()
+			else:
+				# Если Ctrl не зажат - скроллим камеру
+				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+					_scroll_camera(-camera_scroll_speed)
+				elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+					_scroll_camera(camera_scroll_speed)
+
+#===================================#
+# Увеличение зума
+func _zoom_in():
+	if zoom_slider:
+		var new_zoom = zoom_slider.value + zoom_step
+		zoom_slider.value = clamp(new_zoom, zoom_slider.min_value, zoom_slider.max_value)
+
+#===================================#
+# Уменьшение зума
+func _zoom_out():
+	if zoom_slider:
+		var new_zoom = zoom_slider.value - zoom_step
+		zoom_slider.value = clamp(new_zoom, zoom_slider.min_value, zoom_slider.max_value)
 
 #===================================#
 #Переключение видимости настроек с паузой
@@ -413,3 +438,5 @@ func _get_current_max_bottles() -> int:
 func _update_ui():
 	get_tree().call_group("localizable", "update_localization")
 	_update_image_label()
+
+#===================================#
