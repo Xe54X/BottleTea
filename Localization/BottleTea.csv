@@ -13,10 +13,10 @@ loc_FileNone,File: None,Файл: Нет,ファイル: なし
 loc_File,File,Файл,ファイル
 loc_CurrentBottles,Current bottles,Сейчас банок,現在の本数
 loc_AllBottles,Total spawned,Всего заспавнено,総スポーン数
-loc_,,,
-loc_,,,
-loc_,,,
-loc_,,,
+loc_SetStatistics,Statistics,Статистика,統計
+loc_SetLanguage,Language,Язык,言語
+loc_SetCustom,Custom,Пользовательский,カスタム
+loc_SetSatings,Settings,Настройки,設定
 loc_,,,
 loc_,,,
 loc_,,,

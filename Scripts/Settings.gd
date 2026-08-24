@@ -1,21 +1,21 @@
 extends CanvasLayer
 
 #===================================#
-@onready var color_picker: ColorPicker = $ScrollContainer/VBoxContainer/Color/Color/ColorPicker
-@onready var color_apply_button: Button = $ScrollContainer/VBoxContainer/Color/Color/Buttons/ApplyButton
-@onready var color_reset_button: Button = $ScrollContainer/VBoxContainer/Color/Color/Buttons/ResetButton
-@onready var max_bottle_line_edit: LineEdit = $ScrollContainer/VBoxContainer/MaxBottle/MaxBottle/LineEdit
-@onready var max_bottle_apply_button: Button = $ScrollContainer/VBoxContainer/MaxBottle/MaxBottle/ApplyButton
-@onready var image_add_button: Button = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons/Add
-@onready var image_clear_button: Button = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Buttons/Clear
-@onready var image_label: Label = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview/ImagePathLabel
-@onready var image_preview: TextureRect = $ScrollContainer/VBoxContainer/CustomBottle/HBoxContainer/Preview/ImagePreview/TextureRect
-@onready var zoom_slider: HSlider = $ScrollContainer/VBoxContainer/Zoom/HBoxContainer2/HBoxContainer/HSlider
-@onready var zoom_label: Label = $ScrollContainer/VBoxContainer/Zoom/HBoxContainer2/HBoxContainer/Label
-@onready var zoom_reset_button: Button = $ScrollContainer/VBoxContainer/Zoom/HBoxContainer2/Button
-@onready var language_eng_button: Button = $ScrollContainer/VBoxContainer/Localization/Buttons/ENG
-@onready var language_rus_button: Button = $ScrollContainer/VBoxContainer/Localization/Buttons/RUS
-@onready var language_jpn_button: Button = $ScrollContainer/VBoxContainer/Localization/Buttons/JPN
+@onready var color_picker: ColorPicker = $Settings/VBoxContainer/Custom/Color/HBoxContainer/ColorPicker
+@onready var color_apply_button: Button = $Settings/VBoxContainer/Custom/Color/HBoxContainer/Buttons/ApplyButton
+@onready var color_reset_button: Button = $Settings/VBoxContainer/Custom/Color/HBoxContainer/Buttons/ResetButton
+@onready var max_bottle_line_edit: LineEdit = $Settings/VBoxContainer/Sattings/MaxBottle/MaxBottle/LineEdit
+@onready var max_bottle_apply_button: Button = $Settings/VBoxContainer/Sattings/MaxBottle/MaxBottle/ApplyButton
+@onready var image_add_button: Button = $Settings/VBoxContainer/Custom/CustomBottle/HBoxContainer/Buttons/Add
+@onready var image_clear_button: Button = $Settings/VBoxContainer/Custom/CustomBottle/HBoxContainer/Buttons/Clear
+@onready var image_label: Label = $Settings/VBoxContainer/Custom/CustomBottle/HBoxContainer/Preview/ImagePathLabel
+@onready var image_preview: TextureRect = $Settings/VBoxContainer/Custom/CustomBottle/HBoxContainer/Preview/ImagePreview/TextureRect
+@onready var zoom_slider: HSlider = $Settings/VBoxContainer/Sattings/Zoom/HBoxContainer2/HBoxContainer/HSlider
+@onready var zoom_label: Label = $Settings/VBoxContainer/Sattings/Zoom/HBoxContainer2/HBoxContainer/Label
+@onready var zoom_reset_button: Button = $Settings/VBoxContainer/Sattings/Zoom/HBoxContainer2/Button
+@onready var language_eng_button: Button = $Settings/VBoxContainer/Localization/Buttons/ENG
+@onready var language_rus_button: Button = $Settings/VBoxContainer/Localization/Buttons/RUS
+@onready var language_jpn_button: Button = $Settings/VBoxContainer/Localization/Buttons/JPN
 
 #===================================#
 const SETTINGS_PATH = "user://Config.cfg"

@@ -6,3 +6,5 @@ res://Localization/BottleTea.ja.translation
 res://Scripts/MapBottle.gd
 res://Scripts/Bottle.gd
 res://Scripts/Statistics.gd
+res://Scripts/Settings.gd
+res://Scripts/SettingsButtons.gd

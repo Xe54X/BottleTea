@@ -2,8 +2,8 @@ extends StaticBody2D
 
 #===================================#
 @onready var jars_container = $SpawnBottle
-@onready var options: CanvasLayer = $Options
-@onready var stats: VBoxContainer = $Options/ScrollContainer/VBoxContainer/StatisticsBottle
+@onready var Settings: CanvasLayer = $Settings
+@onready var stats: VBoxContainer = $Settings/Settings/VBoxContainer/StatisticsBottle
 
 #===================================#
 const SETTINGS_PATH = "user://Config.cfg"
@@ -22,7 +22,7 @@ var game_input_blocked: bool = false
 
 #===================================#
 func _ready() -> void:
-	options.visible = false
+	Settings.visible = false
 	_load_bottles()
 	_load_stats_from_config()
 	if stats:
@@ -49,12 +49,12 @@ func _process(_delta: float) -> void:
 #===================================#
 #Переключение настроек
 func _toggle_options():
-	if options.visible:
-		options.visible = false
+	if Settings.visible:
+		Settings.visible = false
 		game_input_blocked = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else:
-		options.visible = true
+		Settings.visible = true
 		game_input_blocked = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
