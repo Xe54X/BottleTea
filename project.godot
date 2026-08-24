@@ -57,7 +57,7 @@ options={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Localization/BottleTea.en.translation", "res://Localization/BottleTea.ja.translation", "res://Localization/BottleTea.ru.translation")
+locale/translations=PackedStringArray("res://Localization/BottleTea.en.translation", "res://Localization/BottleTea.ja.translation", "res://Localization/BottleTea.ru.translation", "res://Localization/BottleTea.de.translation", "res://Localization/BottleTea.fr.translation", "res://Localization/BottleTea.zh.translation")
 
 [physics]
 

@@ -1,26 +1,26 @@
-id,en,ru,ja
-loc_ColorBG,Background color:,Цвет фона:,背景色:
-loc_MaxBottle,Max bottles:,Максимум банок:,最大本数:
-loc_Statistics,Statistics:,Статистика:,統計:
-loc_CustomImg,Custom image:,Своя картинка:,カスタム画像:
-loc_Zoom,Zoom:,Масштаб:,拡大/縮小:
-loc_Language,Language:,Язык:,言語:
-loc_Apply,Apply,Применить,適用
-loc_Reset,Reset,Сбросить,リセット
-loc_Add,Add,Добавить,追加
-loc_Settings,Settings,Настройки,設定
-loc_FileNone,File: None,Файл: Нет,ファイル: なし
-loc_File,File,Файл,ファイル
-loc_CurrentBottles,Current bottles,Сейчас банок,現在の本数
-loc_AllBottles,Total spawned,Всего заспавнено,総スポーン数
-loc_SetStatistics,Statistics,Статистика,統計
-loc_SetLanguage,Language,Язык,言語
-loc_SetCustom,Custom,Пользовательский,カスタム
-loc_SetSatings,Settings,Настройки,設定
-loc_,,,
-loc_,,,
-loc_,,,
-loc_,,,
-loc_,,,
-loc_,,,
-loc_,,,
+id,en,ru,de,zh,ja,fr
+loc_ColorBG,Background color:,Цвет фона:,Hintergrundfarbe:,背景颜色:,背景色:,Couleur d'arrière-plan:
+loc_MaxBottle,Max bottles:,Максимум банок:,Max. Flaschen:,最大瓶数:,最大本数:,Max. bouteilles:
+loc_Statistics,Statistics:,Статистика:,Statistik:,统计:,統計:,Statistiques:
+loc_CustomImg,Custom image:,Своя картинка:,Benutzerdefiniertes Bild:,自定义图像:,カスタム画像:,Image personnalisée:
+loc_Zoom,Zoom:,Масштаб:,Zoom:,缩放:,拡大/縮小:,Zoom:
+loc_Language,Language:,Язык:,Sprache:,语言:,言語:,Langue:
+loc_Apply,Apply,Применить,Anwenden,应用,適用,Appliquer
+loc_Reset,Reset,Сбросить,Zurücksetzen,重置,リセット,Réinitialiser
+loc_Add,Add,Добавить,Hinzufügen,添加,追加,Ajouter
+loc_Settings,Settings,Настройки,Einstellungen,设置,設定,Paramètres
+loc_FileNone,File: None,Файл: Нет,Datei: Keine,文件：无,ファイル: なし,Fichier : Aucun
+loc_File,File,Файл,Datei,文件,ファイル,Fichier
+loc_CurrentBottles,Current bottles,Сейчас банок,Aktuelle Flaschen,当前瓶数,現在の本数,Bouteilles actuelles
+loc_AllBottles,Total spawned,Всего заспавнено,Insgesamt gespawnt,总生成数,総スポーン数,Total apparu
+loc_SetStatistics,Statistics,Статистика,Statistik,统计,統計,Statistiques
+loc_SetLanguage,Language,Язык,Sprache,语言,言語,Langue
+loc_SetCustom,Custom,Пользовательский,Benutzerdefiniert,自定义,カスタム,Personnalisé
+loc_SetSatings,Settings,Настройки,Einstellungen,设置,設定,Paramètres
+loc_SetEnglish,English,Английский,Englisch,英语,英語,Anglais
+loc_SetRussian,Russian,Русский,Russisch,俄语,ロシア語,Russe
+loc_SetJapanese,Japanese,Японский,Japanisch,日语,日本語,Japonais
+loc_SetChinese,Chinese,Китайский,Chinesisch,中文,中国語,Chinois
+loc_SetGerman,German,Немецкий,Deutsch,德语,ドイツ語,Allemand
+loc_SetFrench,French,Французский,Französisch,法语,フランス語,Français
+loc_,,,,,,

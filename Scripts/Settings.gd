@@ -13,9 +13,12 @@ extends CanvasLayer
 @onready var zoom_slider: HSlider = $Settings/VBoxContainer/Sattings/Zoom/HBoxContainer2/HBoxContainer/HSlider
 @onready var zoom_label: Label = $Settings/VBoxContainer/Sattings/Zoom/HBoxContainer2/HBoxContainer/Label
 @onready var zoom_reset_button: Button = $Settings/VBoxContainer/Sattings/Zoom/HBoxContainer2/Button
-@onready var language_eng_button: Button = $Settings/VBoxContainer/Localization/Buttons/ENG
-@onready var language_rus_button: Button = $Settings/VBoxContainer/Localization/Buttons/RUS
-@onready var language_jpn_button: Button = $Settings/VBoxContainer/Localization/Buttons/JPN
+@onready var language_en_button: Button = $Settings/VBoxContainer/Localization/Buttons/en
+@onready var language_ru_button: Button = $Settings/VBoxContainer/Localization/Buttons/ru
+@onready var language_ja_button: Button = $Settings/VBoxContainer/Localization/Buttons/ja
+@onready var language_zh_button: Button = $Settings/VBoxContainer/Localization/Buttons/zh
+@onready var language_de_button: Button = $Settings/VBoxContainer/Localization/Buttons/de
+@onready var language_fr_button: Button = $Settings/VBoxContainer/Localization/Buttons/fr
 
 #===================================#
 const SETTINGS_PATH = "user://Config.cfg"
@@ -56,9 +59,12 @@ func _signal_connect():
 	image_clear_button.pressed.connect(_clear_image)
 	zoom_slider.value_changed.connect(_on_zoom_changed)
 	zoom_reset_button.pressed.connect(_reset_zoom)
-	language_eng_button.pressed.connect(func(): _set_language("en"))
-	language_rus_button.pressed.connect(func(): _set_language("ru"))
-	language_jpn_button.pressed.connect(func(): _set_language("ja"))
+	language_en_button.pressed.connect(func(): _set_language("en"))
+	language_ru_button.pressed.connect(func(): _set_language("ru"))
+	language_ja_button.pressed.connect(func(): _set_language("ja"))
+	language_zh_button.pressed.connect(func(): _set_language("zh"))
+	language_de_button.pressed.connect(func(): _set_language("de"))
+	language_fr_button.pressed.connect(func(): _set_language("fr"))
 
 #===================================#
 # Установка языка
@@ -418,7 +424,7 @@ func _load_settings():
 	
 	# Загружаем язык
 	var saved_language = config.get_value("settings", "language", "en")
-	if saved_language in ["ru", "en", "ja"]:
+	if saved_language in ["ru", "en", "ja", "zh", "de", "fr"]:
 		current_language = saved_language
 		TranslationServer.set_locale(current_language)
 

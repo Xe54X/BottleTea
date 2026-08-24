@@ -329,23 +329,41 @@ text = "loc_Language"
 layout_mode = 2
 alignment = 1
 
-[node name="ENG" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=168911575]
+[node name="en" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=168911575]
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "ENG"
+text = "loc_SetEnglish"
 
-[node name="RUS" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=740329124]
+[node name="ru" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=740329124]
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "RUS"
+text = "loc_SetRussian"
 
-[node name="JPN" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=967632067]
+[node name="ja" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=967632067]
 custom_minimum_size = Vector2(150, 35)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "JPN"
+text = "loc_SetJapanese"
+
+[node name="zh" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=684478594]
+custom_minimum_size = Vector2(150, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "loc_SetChinese"
+
+[node name="de" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=1822034736]
+custom_minimum_size = Vector2(150, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "loc_SetGerman"
+
+[node name="fr" type="Button" parent="Settings/Settings/VBoxContainer/Localization/Buttons" unique_id=1736314081]
+custom_minimum_size = Vector2(150, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "loc_SetFrench"
 
 [node name="Line 1" type="ColorRect" parent="Settings/Settings/VBoxContainer/Localization" unique_id=1838118490]
 custom_minimum_size = Vector2(0, 2)
