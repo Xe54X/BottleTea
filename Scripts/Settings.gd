@@ -24,7 +24,9 @@ extends CanvasLayer
 const SETTINGS_PATH = "user://Config.cfg"
 
 #===================================#
-var camera_scroll_speed: float = 10.0
+var camera_scroll_speed: float = 20.0
+var camera_min_x: float = -1000.0
+var camera_max_x: float = 1000.0
 var camera_min_y: float = -1000.0
 var camera_max_y: float = 1000.0
 var current_language := "en"
@@ -34,16 +36,22 @@ var zoom_step: float = 0.1
 func _ready() -> void:
 	_load_settings()
 	_load_window_size()
-	_load_saved_zoom()
-	_signal_connect()
-	if image_preview:
-		image_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		image_preview.custom_minimum_size = Vector2(100, 100)
+	
+	# Настраиваем слайдер зума ДО загрузки
 	if zoom_slider:
 		zoom_slider.min_value = 0.1
 		zoom_slider.max_value = 3.0
 		zoom_slider.step = 0.1
 		zoom_slider.value = 1.0
+	
+	_load_saved_zoom()
+	_load_camera_position()
+	_signal_connect()
+	
+	if image_preview:
+		image_preview.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		image_preview.custom_minimum_size = Vector2(100, 100)
+	
 	get_tree().root.size_changed.connect(_on_window_size_changed)
 	call_deferred("_load_saved_image_deferred")
 
@@ -108,30 +116,40 @@ func _input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton:
 		if event.pressed:
+			# Ctrl + колесо = зум
 			if Input.is_key_pressed(KEY_CTRL):
 				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 					_zoom_in()
 				elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 					_zoom_out()
+			# Shift + колесо = скролл вбок
+			elif Input.is_key_pressed(KEY_SHIFT):
+				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+					_scroll_camera_horizontal(-camera_scroll_speed)
+				elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+					_scroll_camera_horizontal(camera_scroll_speed)
+			# Обычное колесо = скролл вверх/вниз
 			else:
 				if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-					_scroll_camera(-camera_scroll_speed)
+					_scroll_camera_vertical(-camera_scroll_speed)
 				elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-					_scroll_camera(camera_scroll_speed)
+					_scroll_camera_vertical(camera_scroll_speed)
 
 #===================================#
 # Увеличение зума
 func _zoom_in():
 	if zoom_slider:
 		var new_zoom = zoom_slider.value + zoom_step
-		zoom_slider.value = clamp(new_zoom, zoom_slider.min_value, zoom_slider.max_value)
+		new_zoom = clamp(new_zoom, zoom_slider.min_value, zoom_slider.max_value)
+		zoom_slider.value = new_zoom
 
 #===================================#
 # Уменьшение зума
 func _zoom_out():
 	if zoom_slider:
 		var new_zoom = zoom_slider.value - zoom_step
-		zoom_slider.value = clamp(new_zoom, zoom_slider.min_value, zoom_slider.max_value)
+		new_zoom = clamp(new_zoom, zoom_slider.min_value, zoom_slider.max_value)
+		zoom_slider.value = new_zoom
 
 #===================================#
 #Переключение видимости настроек с паузой
@@ -139,14 +157,51 @@ func toggle_settings():
 	visible = not visible
 
 #===================================#
-#Скролл камеры
-func _scroll_camera(amount: float):
+#Скролл камеры вертикально (вверх/вниз)
+func _scroll_camera_vertical(amount: float):
 	var camera = _get_camera()
 	if camera:
 		var new_position = camera.position
 		new_position.y += amount
 		new_position.y = clamp(new_position.y, camera_min_y, camera_max_y)
 		camera.position = new_position
+		_save_camera_position()
+
+#===================================#
+#Скролл камеры горизонтально (влево/вправо)
+func _scroll_camera_horizontal(amount: float):
+	var camera = _get_camera()
+	if camera:
+		var new_position = camera.position
+		new_position.x += amount
+		new_position.x = clamp(new_position.x, camera_min_x, camera_max_x)
+		camera.position = new_position
+		_save_camera_position()
+
+#===================================#
+#Сохранение позиции камеры
+func _save_camera_position():
+	var camera = _get_camera()
+	if camera:
+		var config = ConfigFile.new()
+		var error = config.load(SETTINGS_PATH)
+		if error != OK:
+			config = ConfigFile.new()
+		config.set_value("camera", "position_x", camera.position.x)
+		config.set_value("camera", "position_y", camera.position.y)
+		config.save(SETTINGS_PATH)
+
+#===================================#
+#Загрузка позиции камеры
+func _load_camera_position():
+	var config = ConfigFile.new()
+	var error = config.load(SETTINGS_PATH)
+	if error == OK:
+		var saved_x = config.get_value("camera", "position_x", 0.0)
+		var saved_y = config.get_value("camera", "position_y", 0.0)
+		var camera = _get_camera()
+		if camera:
+			camera.position = Vector2(saved_x, saved_y)
 
 #===================================#
 #Обработка изменения размера окна
@@ -158,7 +213,9 @@ func _on_window_size_changed():
 func _save_window_size():
 	var window_size = DisplayServer.window_get_size()
 	var config = ConfigFile.new()
-	config.load(SETTINGS_PATH)
+	var error = config.load(SETTINGS_PATH)
+	if error != OK:
+		config = ConfigFile.new()
 	config.set_value("window", "width", window_size.x)
 	config.set_value("window", "height", window_size.y)
 	config.save(SETTINGS_PATH)
@@ -174,7 +231,7 @@ func _load_window_size():
 		DisplayServer.window_set_size(Vector2i(width, height))
 
 #===================================#
-#Обработка изменения зума
+#Обработка изменения зума (от слайдера или Ctrl+колесо)
 func _on_zoom_changed(value: float):
 	var camera = _get_camera()
 	if camera:
@@ -188,7 +245,6 @@ func _on_zoom_changed(value: float):
 func _reset_zoom():
 	if zoom_slider:
 		zoom_slider.value = 1.0
-	_on_zoom_changed(1.0)
 
 #===================================#
 #Получение камеры
@@ -202,8 +258,10 @@ func _get_camera():
 #Сохранение зума
 func _save_zoom(value: float):
 	var config = ConfigFile.new()
-	config.load(SETTINGS_PATH)
-	config.set_value("settings", "zoom", value)
+	var error = config.load(SETTINGS_PATH)
+	if error != OK:
+		config = ConfigFile.new()
+	config.set_value("camera", "zoom", value)
 	config.save(SETTINGS_PATH)
 
 #===================================#
@@ -212,10 +270,14 @@ func _load_saved_zoom():
 	var config = ConfigFile.new()
 	var error = config.load(SETTINGS_PATH)
 	if error == OK:
-		var saved_zoom = config.get_value("settings", "zoom", 1.0)
+		var saved_zoom = config.get_value("camera", "zoom", 1.0)
 		if zoom_slider:
-			zoom_slider.value = saved_zoom
-		_on_zoom_changed(saved_zoom)
+			zoom_slider.set_value_no_signal(saved_zoom)
+		var camera = _get_camera()
+		if camera:
+			camera.zoom = Vector2(saved_zoom, saved_zoom)
+			if zoom_label:
+				zoom_label.text = str(round(saved_zoom * 100)) + "%"
 
 #===================================#
 #Применение выбранного цвета
