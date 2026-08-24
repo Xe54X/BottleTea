@@ -5,3 +5,4 @@ res://Localization/BottleTea.ru.translation
 res://Localization/BottleTea.ja.translation
 res://Scripts/MapBottle.gd
 res://Scripts/Bottle.gd
+res://Scripts/Statistics.gd

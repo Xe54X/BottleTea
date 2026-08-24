@@ -10,9 +10,9 @@ loc_Reset,Reset,Сбросить,リセット
 loc_Add,Add,Добавить,追加
 loc_Settings,Settings,Настройки,設定
 loc_FileNone,File: None,Файл: Нет,ファイル: なし
-loc_File,File:,Файл:,ファイル:
-loc_,,,
-loc_,,,
+loc_File,File,Файл,ファイル
+loc_CurrentBottles,Current bottles,Сейчас банок,現在の本数
+loc_AllBottles,Total spawned,Всего заспавнено,総スポーン数
 loc_,,,
 loc_,,,
 loc_,,,

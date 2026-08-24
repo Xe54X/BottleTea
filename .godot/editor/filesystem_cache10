@@ -2,22 +2,22 @@
 ::res://::1787549604
 export_presets.cfg::TextFile::-1::1787416849::0::1::::<><><>0<>0<><>::
 README.md::TextFile::-1::1787417161::0::1::::<><><>0<>0<><>::
-::res://Localization/::1787551200
-BottleTea.csv::Translation::3720583136429580120::1787551549::1787551557::1::::<><><>0<>0<>c5077912226ec47b39256a1126738968<>res://Localization/BottleTea.en.translation<*>res://Localization/BottleTea.ru.translation<*>res://Localization/BottleTea.ja.translation::
-BottleTea.en.translation::OptimizedTranslation::4779342979118852601::1787551557::0::1::::<><><>0<>0<><>::
-BottleTea.ru.translation::OptimizedTranslation::7588469711857250626::1787551557::0::1::::<><><>0<>0<><>::
-BottleTea.ja.translation::OptimizedTranslation::1623135360368276819::1787551557::0::1::::<><><>0<>0<><>::
-::res://Scripts/::1787551506
-Bottle.gd::GDScript::8109248852180015908::1787412681::0::1::::<>RigidBody2D<><>0<>0<><>::
-MapBottle.gd::GDScript::5705271102952170204::1787416529::0::1::::<>StaticBody2D<><>0<>0<><>::
-Options.gd::GDScript::6636107514797944263::1787551506::0::1::::<>CanvasLayer<><>0<>0<><>::
-Statistics.gd::GDScript::3394970588364509401::1787411617::0::1::::<>VBoxContainer<><>0<>0<><>::
+::res://Localization/::1787553049
+BottleTea.csv::Translation::3720583136429580120::1787553182::1787553191::1::::<><><>0<>0<>c5077912226ec47b39256a1126738968<>res://Localization/BottleTea.en.translation<*>res://Localization/BottleTea.ru.translation<*>res://Localization/BottleTea.ja.translation::
+BottleTea.en.translation::OptimizedTranslation::4779342979118852601::1787553191::0::1::::<><><>0<>0<><>::
+BottleTea.ru.translation::OptimizedTranslation::7588469711857250626::1787553191::0::1::::<><><>0<>0<><>::
+BottleTea.ja.translation::OptimizedTranslation::1623135360368276819::1787553191::0::1::::<><><>0<>0<><>::
+::res://Scripts/::1787553154
+Bottle.gd::GDScript::8109248852180015908::1787552182::0::1::::<>RigidBody2D<><>0<>0<><>::
+MapBottle.gd::GDScript::5705271102952170204::1787552412::0::1::::<>StaticBody2D<><>0<>0<><>::
+Options.gd::GDScript::6636107514797944263::1787552569::0::1::::<>CanvasLayer<><>0<>0<><>::
+Statistics.gd::GDScript::3394970588364509401::1787553154::0::1::::<>VBoxContainer<><>0<>0<><>::
 ::res://Sprites/::1787408280
 Bottle 1.png::CompressedTexture2D::1416557471725355230::1787299819::1787406873::1::::<><><>0<>0<>f44f04837825c70271a7d711f3c5032f<>res://.godot/imported/Bottle 1.png-2adcd766ccacd232c341ccf59bf663e9.ctex::
 Bottle 2.png::CompressedTexture2D::7171933781501692207::1787408034::1787408035::1::::<><><>0<>0<>7427dc665377d0bdd194f7cae65d9a24<>res://.godot/imported/Bottle 2.png-c97bbd13f6f454208cccafa517db4c0a.ctex::
 BottleTea.ico::OtherFile::-1::1787300819::0::1::::<><><>0<>0<><>::
 BottleTea.svg::CompressedTexture2D::7785456140247743912::1787300535::1787300598::1::::<><><>0<>0<>2100f776d5b3c9e5dafddf9e66fb0f6a<>res://.godot/imported/BottleTea.svg-726a0b938cbf7048c0e9b1ee43478e86.ctex::
 NoTexture.png::CompressedTexture2D::7885184765123715672::1787408278::1787408280::1::::<><><>0<>0<>777a650019ffabcfa1c0df9ab29a4745<>res://.godot/imported/NoTexture.png-baef1a01c7ff19bf256392331275af7d.ctex::
-::res://Tscn/::1787551506
+::res://Tscn/::1787552712
 Bottle.tscn::PackedScene::8519340348718894744::1787414269::0::1::::<><><>0<>0<><>::uid://dnsge5iw611b1::::res://Scripts/Bottle.gd<>uid://dagex38w1mftv::::res://Sprites/Bottle 2.png
-MapBottle.tscn::PackedScene::4143554650124593557::1787551506::0::1::::<><><>0<>0<><>::uid://cnjw8mvp66mxw::::res://Scripts/MapBottle.gd<>uid://c1styry47w1tj::::res://Scripts/Options.gd<>uid://bomsw1bepvlrt::::res://Scripts/Statistics.gd
+MapBottle.tscn::PackedScene::4143554650124593557::1787552712::0::1::::<><><>0<>0<><>::uid://cnjw8mvp66mxw::::res://Scripts/MapBottle.gd<>uid://c1styry47w1tj::::res://Scripts/Options.gd<>uid://bomsw1bepvlrt::::res://Scripts/Statistics.gd

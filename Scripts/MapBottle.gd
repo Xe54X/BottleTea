@@ -256,5 +256,3 @@ func get_max_bottles() -> int:
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_save_game()
-
-#===================================#

@@ -103,5 +103,3 @@ func get_custom_texture() -> Texture2D:
 #===================================#
 func get_custom_texture_path() -> String:
 	return custom_texture_path
-
-#===================================#
